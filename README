@@ -7,6 +7,12 @@ clojure future of the result.
 on the specified threadpool. this is useful for limiting certain pipeline stages
 to only run on a give number of threads by means of a fixed-thread-pool
 
+## Limitations
+
+doesn't play well with a-loop
+
+doesn't play well with pipeline stages that don't return a value
+
 ## Usage
 
 FIXME: write
