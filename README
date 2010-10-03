@@ -1,0 +1,22 @@
+# conduit-threadpool
+
+(a-async proc) wraps a proc in a version that runs asynchronously an yields a
+clojure future of the result.
+
+(a-threadpool tp proc) wraps a proc in a proc that will run the original proc
+on the specified threadpool. this is useful for limiting certain pipeline stages
+to only run on a give number of threads by means of a fixed-thread-pool
+
+## Usage
+
+FIXME: write
+
+## Installation
+
+FIXME: write
+
+## License
+
+Copyright (C) 2010 FIXME
+
+Distributed under the Eclipse Public License, the same as Clojure.
