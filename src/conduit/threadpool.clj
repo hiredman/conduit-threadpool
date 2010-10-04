@@ -26,7 +26,13 @@
     java.util.concurrent.Future
     (get [this] (.get fut))
     (get [this timeout units]
-      (.get fut timeout units))))
+      (.get fut timeout units))
+    (cancel [interrupt]
+      (.cancel fut interrupt))
+    (isCancelled [this]
+      (.isCancelled fut))
+    (isDone [this]
+      (.isDone fut))))
 
 (defn- threadpool-pub-reply [fun threadpool]
   (fn threadpool-reply [value]
