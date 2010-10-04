@@ -47,20 +47,3 @@
 
 (defn fixed-thread-pool [n]
   (Executors/newFixedThreadPool n))
-
-(comment
-
-  (let [threads (atom #{})
-        numbers (atom #{})
-        some-arr (a-arr (fn [x]
-                          (swap! threads conj (.getId (Thread/currentThread)))
-                          (swap! numbers conj x)))
-        tp (fixed-thread-pool 4)]
-    (doall (map deref (conduit-map (a-comp (a-threadpool tp some-arr)
-                                           pass-through)
-                                   (range 10))))
-    (println threads)
-    (println numbers))
-  
-
-  )
