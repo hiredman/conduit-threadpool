@@ -53,3 +53,18 @@
 
 (defn fixed-thread-pool [n]
   (Executors/newFixedThreadPool n))
+
+(defn- delay-pub-reply [fun]
+  (fn delay-reply [value]
+    [[(delay (-> value fun first first))] delay-reply]))
+
+(defn- delay-sg-fn [fun]
+  (fn delay-reply [value]
+    (fn [] [[(delay (-> value fun first first))] delay-reply])))
+
+(defn a-delay [proc]
+  (assoc proc
+    :type :delay
+    :reply (delay-pub-reply (:reply proc))
+    :no-reply (delay-pub-reply (:no-reply proc))
+    :scatter-gather (delay-sg-fn (:scatter-gather proc))))
