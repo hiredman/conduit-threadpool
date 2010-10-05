@@ -46,7 +46,7 @@
 
 (defn a-threadpool [threadpool proc]
   (assoc proc
-    :type :async
+    :type :threadpool
     :reply (threadpool-pub-reply (:reply proc) threadpool)
     :no-reply (threadpool-pub-reply (:no-reply proc) threadpool)
     :scatter-gather (threadpool-sg-fn (:scatter-gather proc) threadpool)))
