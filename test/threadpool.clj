@@ -16,3 +16,13 @@
     (is (= 4 (count @threads)))
     (is (= (set (range 10))
            @numbers))))
+
+(deftest test-a-delay
+  (let [numbers (atom #{})
+        some-arr (a-arr (fn [x] (swap! numbers conj x) x))
+        x (doall
+           (conduit-map (a-delay some-arr)
+                        (range 10)))]
+    (is (= 0 (count @numbers)))
+    (doseq [y x] (deref y))
+    (is (= 10 (count @numbers)))))
