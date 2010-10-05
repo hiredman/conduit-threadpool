@@ -27,7 +27,7 @@
     (get [this] (.get fut))
     (get [this timeout units]
       (.get fut timeout units))
-    (cancel [interrupt]
+    (cancel [this interrupt]
       (.cancel fut interrupt))
     (isCancelled [this]
       (.isCancelled fut))
