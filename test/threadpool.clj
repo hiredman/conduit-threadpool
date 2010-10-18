@@ -26,3 +26,8 @@
     (is (= 0 (count @numbers)))
     (doseq [y x] (deref y))
     (is (= 10 (count @numbers)))))
+
+(deftest test-a-binding
+  (is (= 2 (first (conduit-map (a-binding {#'+ *}
+                                          (a-arr (partial apply #'+)))
+                               [[1 2]])))))

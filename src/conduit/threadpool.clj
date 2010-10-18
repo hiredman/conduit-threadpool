@@ -68,3 +68,27 @@
     :reply (delay-pub-reply (:reply proc))
     :no-reply (delay-pub-reply (:no-reply proc))
     :scatter-gather (delay-sg-fn (:scatter-gather proc))))
+
+(defn- binding-pub-reply [fun bindings]
+  (fn binding-reply [value]
+    (push-thread-bindings bindings)
+    (try
+      (fun value)    
+      (finally
+       (pop-thread-bindings)))))
+
+(defn- binding-sg-fn [fun bindings]
+  (fn binding-reply [value]
+    (fn []
+      (push-thread-bindings bindings)
+      (try
+        (fun value)    
+        (finally
+         (pop-thread-bindings))))))
+
+(defn a-binding [bindings proc]
+  (assoc proc
+    :type :binding
+    :reply (binding-pub-reply (:reply proc) bindings)
+    :no-reply (binding-pub-reply (:no-reply proc) bindings)
+    :scatter-gather (binding-sg-fn (:scatter-gather proc) bindings)))
